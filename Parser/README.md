@@ -2,14 +2,14 @@
 
 DESIGN:
 COOL SYNTAX:-   
-&nbsp; program ::= [class;]+  
-   class ::= class TYPE [inherits TYPE] {[feature;]*}  
-   feature ::= ID([formal [, formal]*] ) : TYPE { expr }  
-               | ID : TYPE [ <- expr ]  
-   formal : ID : TYPE   
-   expr: ID <- expr  
-       | expr[@TYPE].ID([expr[, expr]*])  
-	    | ID([expr[,expr]*])   
+&nbsp;&nbsp;&nbsp;&nbsp; program ::= [class;]+  
+&nbsp;&nbsp;&nbsp;&nbsp; class ::= class TYPE [inherits TYPE] {[feature;]*}  
+&nbsp;&nbsp;&nbsp;&nbsp; feature ::= ID([formal [, formal]*] ) : TYPE { expr }  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| ID : TYPE [ <- expr ]  
+&nbsp;&nbsp;&nbsp;&nbsp;   formal : ID : TYPE   
+&nbsp;&nbsp;&nbsp;&nbsp;   expr: ID <- expr  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       | expr[@TYPE].ID([expr[, expr]*])  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	    | ID([expr[,expr]*])   
        | if expr then expr else expr fi    
 	    | while expr loop expr pool   
 	    | {[expr]+}    
