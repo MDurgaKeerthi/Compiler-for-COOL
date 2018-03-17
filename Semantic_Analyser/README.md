@@ -1,64 +1,64 @@
-The sematic analysis of the cool copiler is done by following the procedures given below:
-1. Default class installation
-2.Generating inheritance graph
-3.Traversing the inheritance graph
-4.Inserting all the values into Scope table.
-5.Naming And Scoping
-6.Type checking
+The sematic analysis of the cool copiler is done by following the procedures given below:   
+1. Default class installation   
+2.Generating inheritance graph   
+3.Traversing the inheritance graph   
+4.Inserting all the values into Scope table.  
+5.Naming And Scoping   
+6.Type checking   
 
 Default class installation: The basic classes of the cool language are stored into a hash table with the key as name of the class and the value as the basic_class class written in the program .basic_class class is similar to that of the AST.class_ which has class name,parent of the class,attribute list (AST.attr)and method list(AST.method).The basic classes of cool language are Object,String ,Int,Bool,IO.The main has parent as object.Basic classes invlove the following.
-Object:Has methods
-	abort():Object :-Halts the program execution with an error message
-	type_name() :String:-Returns string with the name of the class of the object
-	copy() :SELF_TYPE :-Produces a shallow copy of the object
-IO: Has methods
-	out_string(x:String) :SELF_TYPE:-Prints the argument and returns self value
-	out_int(X:Int):SELF_TYPE :- Prints the argument and returns self value
-	in_string():String :- Reads an String form the standard user input
-	in_int() :Int :-Reads an int form the standard user input
-Int:There are no methods special to Int.
-String:Has methods
-	length() :Int :-Returns length of the self parameter.
-	concat(s:String) :String :-returns the string formed by concatenating s after self.
-	Substr(i:Int,l:Int) :String :-returns the substring of its self parameter.
-Bool:The Bool class provides true and false.There are neither methods nor attributes.
-These basic classes can't be redefined. String, Int, Bool of basic classes can't be inherited.
-SELF_TYPE handling is done to some extent through the functions conforms and parent_type.
-
-
-Generating inheritance graph:The inheritance graph is built in adjacency list manner.First the classes object and IO are inserted into the graph.Object is the class root of the inheritance graph.If a new class arrives, here we are checking if the class belongs to one of the basic classes of cool language .If the class belongs to one of the basic classes then report error .If the class parent belongs to basic classes of cool language then report error.If the above two conditions doesnot hold add the class to the list by adding an empty list corresponding to that class.If a classA inherits calss B then an edge is added from class B to class A int the adjacency list.
-
-Traversing the inheritance graph:The constructed inheritance graph above is travesrsed three times
-1.Cycle check: For cycle check the tree is traversed in DFS-order.We are traversing the graph along the depth and checking if a node is visited twice .if the node is visited twice report error. If many cycles exits in the graph all cycles are reported. If cycles are found in the tree then exit.
-2. We are inserting the classes for semantic check inside the class in BFS order so that all the attributes and methods are inherited .
-3. The semantic error check for all the attributes and methods of the class is done .The semantic errors involve the following.
-For Attributes:
-	Multiple definition of attribute.
-	Redefinition of the attribute of inherited class.
-For Methods:
-	Multiple definition of methods.
-	Incompatible number of parameters in the redefinition of the method of inherited class.
-	Miss match of Return type in the redefinition of the method of inherited class.
-	Miss match in the parameter types in the redefinition of the method of inherited class.
-Conforms function:conforms function which recusively checks whether the two types or equal or not .
-	Handles self_type virtually.
-	If the two types are exactly equal then it returns true
-	else it again calls conform for the first parameter.parent and second parameter if the first parameter.parent is not null.
-	Else returns false.
-	In the conforms calling we give first parameter as value type and second parameter as assigned type id
-Parent-type:Performs the join operation as mentioned in the cool manual.
-Type Checking:
-	Type checking for method return type id and method body return type are done using conforms function with first parameter as method.body.type and second type as method,typeid
-	Type checking for Attributes is also done using confomrs method with attr.value.type as first argument and attr.typeid as second argument.
-	The type checking in typecase and condition expressions is done using parent_type method.
-Every program must have a class Main. The Main class must have the method main that takes no formal parameters. The main method must be defined in class Main (not inherited from another class).
-All class names are globally visible. Classes may not be redefined.
-No method name may be defined multiple times in a class, and no attribute name may be defined multiple times in a class, but a method and an attribute may have the same name.
-All attributes have scope local to the class, and all methods have global scope.
-Most of the static type constraints are being checked.
-
-Expression:
-Assignment: ID <- expr
+Object:Has methods    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	abort():Object :-Halts the program execution with an error message   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	type_name() :String:-Returns string with the name of the class of the object  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	copy() :SELF_TYPE :-Produces a shallow copy of the object   
+IO: Has methods   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	out_string(x:String) :SELF_TYPE :-Prints the argument and returns self value  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	out_int(X:Int): SELF_TYPE :- Prints the argument and returns self value   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	in_string():String :- Reads an String form the standard user input
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	in_int() :Int :-Reads an int form the standard user input
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Int:There are no methods special to Int.
+String:Has methods   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	length() :Int :-Returns length of the self parameter.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	concat(s:String) :String :-returns the string formed by concatenating s after self.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Substr(i:Int,l:Int) :String :-returns the substring of its self parameter.    
+Bool:The Bool class provides true and false.There are neither methods nor attributes.   
+These basic classes can't be redefined. String, Int, Bool of basic classes can't be inherited.   
+SELF_TYPE handling is done to some extent through the functions conforms and parent_type.   
+    
+Generating inheritance graph:The inheritance graph is built in adjacency list manner.First the classes object and IO are inserted into the graph.Object is the class root of the inheritance graph.If a new class arrives, here we are checking if the class belongs to one of the basic classes of cool language .If the class belongs to one of the basic classes then report error .If the class parent belongs to basic classes of cool language then report error.If the above two conditions doesnot hold add the class to the list by adding an empty list corresponding to that class.If a classA inherits calss B then an edge is added from class B to class A int the adjacency list.   
+   
+Traversing the inheritance graph:The constructed inheritance graph above is travesrsed three times   
+1.Cycle check: For cycle check the tree is traversed in DFS-order.We are traversing the graph along the depth and checking if a node is visited twice .if the node is visited twice report error. If many cycles exits in the graph all cycles are reported. If cycles are found in the tree then exit.   
+2. We are inserting the classes for semantic check inside the class in BFS order so that all the attributes and methods are inherited .  
+3. The semantic error check for all the attributes and methods of the class is done .The semantic errors involve the following.  
+For Attributes:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Multiple definition of attribute.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Redefinition of the attribute of inherited class.  
+For Methods:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Multiple definition of methods.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Incompatible number of parameters in the redefinition of the method of inherited class.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Miss match of Return type in the redefinition of the method of inherited class.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Miss match in the parameter types in the redefinition of the method of inherited class.  
+Conforms function:conforms function which recusively checks whether the two types or equal or not.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Handles self_type virtually.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	If the two types are exactly equal then it returns true  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	else it again calls conform for the first parameter.parent and second parameter if the first parameter.parent is not null.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Else returns false.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	In the conforms calling we give first parameter as value type and second parameter as assigned type id   
+    
+Parent-type:Performs the join operation as mentioned in the cool manual.  
+Type Checking:   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Type checking for method return type id and method body return type are done using conforms function with first parameter as method.body.type and second type as method,typeid  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Type checking for Attributes is also done using confomrs method with attr.value.type as first argument and attr.typeid as second argument.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	The type checking in typecase and condition expressions is done using parent_type method.  
+Every program must have a class Main. The Main class must have the method main that takes no formal parameters. The main method must be defined in class Main (not inherited from another class).  
+All class names are globally visible. Classes may not be redefined.  
+No method name may be defined multiple times in a class, and no attribute name may be defined multiple times in a class, but a method and an attribute may have the same name.   
+All attributes have scope local to the class, and all methods have global scope.  
+Most of the static type constraints are being checked.  
+   
+Expression:   
+Assignment: ID <- expr   
 	The static type of the expression must conform to the declared type of the identifier. 
 	The static type of an assignment is the static type of expr.
 Dispatch and Static Dispatch:
