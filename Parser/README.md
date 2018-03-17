@@ -2,7 +2,7 @@
 
 DESIGN:
 COOL SYNTAX:-   
-   program ::= [class;]+  
+&nbsp; program ::= [class;]+  
    class ::= class TYPE [inherits TYPE] {[feature;]*}  
    feature ::= ID([formal [, formal]*] ) : TYPE { expr }  
                | ID : TYPE [ <- expr ]  
