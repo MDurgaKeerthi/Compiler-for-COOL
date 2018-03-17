@@ -48,9 +48,10 @@ Conforms function:  conforms function which recusively checks whether the two ty
     
 Parent-type:Performs the join operation as mentioned in the cool manual.  
 Type Checking:   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Type checking for method return type id and method body return type are done using conforms function with first parameter as method.body.type and second type as method,typeid  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	Type checking for Attributes is also done using confomrs method with attr.value.type as first argument and attr.typeid as second argument.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	The type checking in typecase and condition expressions is done using parent_type method.  
+&nbsp;&nbsp;&nbsp;&nbsp;*Type checking for method return type id and method body return type are done using conforms function with first parameter as method.body.type and second type as method,typeid  
+&nbsp;&nbsp;&nbsp;&nbsp;*Type checking for Attributes is also done using confomrs method with attr.value.type as first argument and attr.typeid as second argument.  
+&nbsp;&nbsp;&nbsp;&nbsp;*The type checking in typecase and condition expressions is done using parent_type method.  
+  
 Every program must have a class Main. The Main class must have the method main that takes no formal parameters. The main method must be defined in class Main (not inherited from another class).  
 All class names are globally visible. Classes may not be redefined.  
 No method name may be defined multiple times in a class, and no attribute name may be defined multiple times in a class, but a method and an attribute may have the same name.   
@@ -58,70 +59,70 @@ All attributes have scope local to the class, and all methods have global scope.
 Most of the static type constraints are being checked.  
    
 Expression:   
-Assignment: ID <- expr   
-	The static type of the expression must conform to the declared type of the identifier. 
-	The static type of an assignment is the static type of expr.
-Dispatch and Static Dispatch:
-	<expr>.<id>(<expr>,...,<expr>)
-	<id>(<expr>,...,<expr>)
-	<expr>@<type>.id(<expr>,...,<expr>)(Static Dispatch)
-	The semantic checks invloves:
-	The class method being called by the caller must be defined in the class.
-	The dispatch and the methods should have same number of parameters.
-	The dispatch parameter’s type and the method parameter types sholud be matched in the order of parameters.
-	The return type of the dispatch and the return type of the method must be same.
-	The second form is similar to self.<id>(<expr>,...,<expr>)
-	For the Static dispatch an extra check is used.The type of the epression to the left of @ and to that to the right of @ must be matched.
-Conditionals: if expr then expr else expr fi
-	The predicate is evaluated first. The predicate must have static type Bool.
-	The branches may have any static types. 
-	To represent join operation in finding the static type of the conditional, parent_type function is defined. 
-	The static type of the conditional is join of static types of branches of the conditional.
-Loops: while expr loop expr pool
-	The predicate is evaluated before each iteration of the loop. 
-	The predicate must have static type Bool. 
-	The body may have any static type. 
-	The static type of a loop expression is Object.
-Blocks: { [[expr; ]] + }
-	The expressions of a block may have any static types. 
-	The static type of a block is the static type of the last expression.
-Let: let ID : TYPE [ <- expr ] [[, ID : TYPE [ <- expr ]]] * in expr
-	The optional expressions are initialization; the other expression is the body. 
-	Every let expression must introduce at least one identifier.
-	Identifiers introduced by let also hide any definitions for the same names in containing scopes.
-	The type of an initialization expression must conform to the declared type of the identifier. 
-	The type of let is the type of the body.
-Case: case expr of [[ID : TYPE => expr; ]] + esac
-	The static type of a case expression is join of static type of all branches.
-	The identifier id introduced by a branch of a case hides any variable or attribute definition for id visible in the containing scope.
-new TYPE
-	The static type is <type>.
-isvoid expr
-Binary arithmetic operations:
-	expr1 + expr2
-	expr1 − expr2
-	expr1 * expr2
-	expr1 / expr2
-	first expr1 is evaluated and then expr2.
-	The static types of the two sub-expressions must be Int.
-	The static type of the expression is Int.
-Comparision operators:	
-	expr1 < expr2
-	expr1 <= expr2
-	expr1 = expr2
-	For < and <=, handling is same as the binary arithmetic operations, except that the static type of the result is Bool.
-	For = : If either <expr1> or <expr2> has static type Int, Bool, or String, then the other must have the same static type. Any other types, including SELF TYPE, may be freely compared.
-Unary arithmetic operator:  ̃expr
-	The expression <expr> must have static type Int and the entire expression has static type Int.
-Unary logical operator: not expr
-	The expression must have static type Bool and the entire expression has static type Bool.
-Object
-	Valid identifier.
-Int
-	The default initialization for variables of type Int is 0 (not void). So, node.type is "Int".
-String
-Bool
-	The default initialization for variables of type Bool is false (not void). So, node.type is "Bool".
+Assignment: ID <- expr     
+	The static type of the expression must conform to the declared type of the identifier.   
+	The static type of an assignment is the static type of expr.   
+Dispatch and Static Dispatch:   
+	<expr>.<id>(<expr>,...,<expr>)   
+  	<id>(<expr>,...,<expr>)   
+	<expr>@<type>.id(<expr>,...,<expr>)(Static Dispatch)  
+	The semantic checks invloves:   
+	The class method being called by the caller must be defined in the class.   
+	The dispatch and the methods should have same number of parameters.    
+	The dispatch parameter’s type and the method parameter types sholud be matched in the order of parameters.   
+	The return type of the dispatch and the return type of the method must be same.   
+	The second form is similar to self.<id>(<expr>,...,<expr>)   
+	For the Static dispatch an extra check is used.The type of the epression to the left of @ and to that to the right of @ must be matched.   
+Conditionals: if expr then expr else expr fi   
+	The predicate is evaluated first. The predicate must have static type Bool.  
+	The branches may have any static types.    
+	To represent join operation in finding the static type of the conditional, parent_type function is defined.    
+	The static type of the conditional is join of static types of branches of the conditional.   
+Loops: while expr loop expr pool   
+	The predicate is evaluated before each iteration of the loop.    
+	The predicate must have static type Bool.    
+	The body may have any static type.   
+	The static type of a loop expression is Object.   
+Blocks: { [[expr; ]] + }    
+	The expressions of a block may have any static types.    
+	The static type of a block is the static type of the last expression.   
+Let: let ID : TYPE [ <- expr ] [[, ID : TYPE [ <- expr ]]] * in expr   
+	The optional expressions are initialization; the other expression is the body.    
+	Every let expression must introduce at least one identifier.   
+	Identifiers introduced by let also hide any definitions for the same names in containing scopes.  
+	The type of an initialization expression must conform to the declared type of the identifier.   
+	The type of let is the type of the body.   
+Case: case expr of [[ID : TYPE => expr; ]] + esac   
+	The static type of a case expression is join of static type of all branches.  
+	The identifier id introduced by a branch of a case hides any variable or attribute definition for id visible in the containing scope.  
+new TYPE   
+	The static type is <type>.  
+isvoid expr  
+Binary arithmetic operations:  
+	expr1 + expr2   
+	expr1 − expr2   
+	expr1 * expr2   
+	expr1 / expr2  
+	first expr1 is evaluated and then expr2.  
+	The static types of the two sub-expressions must be Int.  
+	The static type of the expression is Int.  
+Comparision operators:	  
+	expr1 < expr2   
+	expr1 <= expr2    
+	expr1 = expr2   
+	For < and <=, handling is same as the binary arithmetic operations, except that the static type of the result is Bool.  
+	For =, If either <expr1> or <expr2> has static type Int, Bool, or String, then the other must have the same static type. Any other types, including SELF TYPE, may be freely compared.  
+Unary arithmetic operator:  ̃expr  
+	The expression <expr> must have static type Int and the entire expression has static type Int.   
+Unary logical operator: not expr   
+	The expression must have static type Bool and the entire expression has static type Bool.   
+Object   
+	Valid identifier   
+Int   
+	The default initialization for variables of type Int is 0 (not void). So, node.type is "Int".  
+String   
+Bool   
+	The default initialization for variables of type Bool is false (not void). So, node.type is "Bool".   
 
 
 
